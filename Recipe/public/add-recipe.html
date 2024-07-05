@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...your-integrity-hash..." crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>
+
+  <meta charset="UTF-8">
+  <title>Add Recipe | Recipe Recommendation System</title>
+  <link rel="stylesheet" href="styler.css">
+</head>
+<body>
+  <header>
+    <h1>Taste Trove</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="dashboard2.html">Dashboard</a></li> <!-- Link to Dashboard -->
+        <li><a href="/">Logout</a></li> <!-- Logout link -->
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Add Recipe</h2>
+    
+    <form id="recipeForm" action="/recipes" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br><br>
+    
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required><br><br>
+    
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" required></textarea><br><br>
+    
+      <label for="ingredients">Ingredients:</label>
+      <textarea id="ingredients" name="ingredients" required></textarea><br><br>
+    
+      <label for="instructions">Instructions:</label>
+      <textarea id="instructions" name="instructions" required></textarea><br><br>
+    
+      <button type="submit">Add Recipe</button>
+    </form>
+    
+    <!-- Modal for success/error messages -->
+    <div class="modal" id="successModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="successMessage"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Recipe Recommendation System</p>
+  </footer>
+
+  <script>
+    // JavaScript for handling form submission and modal display
+    document.getElementById('recipeForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const ingredients = document.getElementById('ingredients').value;
+      const instructions = document.getElementById('instructions').value;
+
+      try {
+        const response = await fetch('/recipes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, title, description, ingredients, instructions })
+        });
+
+        if (response.ok) {
+          showModal('Recipe created successfully!');
+          document.getElementById('recipeForm').reset(); // Clear form on success
+        } else {
+          showModal('Error creating recipe!');
+        }
+      } catch (error) {
+        showModal('An error occurred. Please try again later.');
+      }
+    });
+
+    function showModal(message) {
+      const modal = document.getElementById('successModal');
+      const successMessage = document.getElementById('successMessage');
+      successMessage.innerText = message;
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('successModal');
+      modal.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+/* Body styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #222222;
+}
+
+/* Header styles */
+header {
+  display: flex;
+  direction: row;
+  justify-content: space-around;
+  background-color: #00454A;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header > div {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+nav ul {
+  margin-left: 100px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333333;
+}
+
+nav ul li a:hover {
+  color: #666666;
+}
+
+/* Main content styles */
+main {
+  max-width: 600px;
+  margin: 200px auto;
+  padding: 20px;
+  background-color: #00454A;
+  box-shadow: 0 0 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px;
+}
+
+main h2 {
+  margin-top: 0;
+}
+
+/* Form styles */
+form {
+  flex-direction: column;
+}
+
+form.active {
+  display: block;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: calc(100% - 10px);
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px;
+  background-color: #333333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555555;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  text-align: center;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Additional styles for positioning */
+.footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.buttonsall {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.buttonsall > button {
+  margin-right: 20px;
+  width: 170px;
+  text-decoration: none;
+  color: #222222;
+  background-color: #222222;
+}
+
+.slide {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  
+}

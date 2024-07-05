@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Recipe Recommendation System</title>
+  <link rel="stylesheet" href="logincss.css">
+</head>
+<body>
+  <header>
+    <!-- Header content -->
+    <div><a href="/" style="text-decoration: none; color: white;"><h2>Home</h2></a></div>
+    <div><h1 style=" font-family: 'Lucida Handwriting', cursive; color: #ffffff;">Taste Trove</h1></div>
+    <div><a href="/" style="text-decoration: none; color: white;"><h2></h2></a></div>
+  </header>
+
+  <main>
+    <div class="slider" >
+      <div class="buttonsall">
+        <button id="loginBtn" type="button" onclick="hideElement1()" style="background-color: #00454A; color: white; font-weight: 800; font-size: larger;">LOGIN</button>
+        <button id="signupBtn" type="button" onclick="hideElement2()" style="background-color: #00454A; color: white; font-weight: 800; font-size: larger;">SIGNUP</button>
+      </div>
+
+      <!-- Slide 1: Login -->
+      <div class="slide" id="log">
+        <form id="loginForm" style=" padding: 20px; background-color: #00454A;">
+          <label for="email" style="color: #ED6363;">Email:</label>
+          <input type="email" id="email" name="email" required style="background-color: #3C6562; border-radius: 10px; margin-top: 10px;"><br><br>
+      
+          <label for="password" style="color: #ED6363;">Password:</label>
+          <input type="password" id="password" name="password" required style="background-color: #3C6562; border-radius: 10px; margin-top: 10px;"><br><br>
+      
+          <button type="submit" style="width: 100%; background-color: #ED6363;">Login</button>
+        </form>
+      </div>
+
+      <!-- Slide 2: Signup -->
+      <div class="slide" id="sign">
+        <form id="signupForm" action="/users/signup" method="post" style="background-color: #00454A; padding: 20px; ">
+          <label for="signupUsername" style="color: #ED6363;">USERNAME:</label>
+          <input type="text" id="signupUsername" name="username" required style="background-color: #3C6562; border-radius: 10px; margin-top: 10px;"><br><br>
+        
+          <label for="signupEmail" style="color: #ED6363;">EMAIL:</label>
+          <input type="email" id="signupEmail" name="email" required style="background-color:#3C6562; border-radius: 10px; margin-top: 10px;"><br><br>
+
+          <label for="signupPassword" style="color: #ED6363;">PASSWORD:</label>
+          <input type="password" id="signupPassword" name="password" required style="background-color: #3C6562; border-radius: 10px; margin-top: 10px;"><br><br>
+        
+          <button type="submit" style="width: 100%; background-color: #ED6363;">SIGNUP</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal and additional JavaScript -->
+    <div class="modal" id="successModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="successMessage"></p>
+      </div>
+    </div>
+  </main>
+
+  
+
+  <script>
+    d1=window.getComputedStyle(document.getElementById('log')).display;
+d2=window.getComputedStyle(document.getElementById('sign')).display;
+document.getElementById('sign').style.display='none';
+function hideElement1(){
+  document.getElementById('log').style.display=d1;
+  document.getElementById('sign').style.display='none';
+}
+function hideElement2(){
+  document.getElementById('sign').style.display=d2;
+  document.getElementById('log').style.display='none';
+}
+   
+    document.getElementById('signupForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const signupUsername = document.getElementById('signupUsername').value;
+      const signupEmail = document.getElementById('signupEmail').value;
+      const signupPassword = document.getElementById('signupPassword').value;
+  
+     
+      const signupData = {
+        username: signupUsername,
+        email: signupEmail,
+        password: signupPassword
+      };
+  
+  
+      const response = await fetch('/users/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(signupData)
+      });
+  
+      if (response.ok) {
+        const successMessage = `Account created for ${signupUsername}!`;
+        displaySuccessModal(successMessage);
+        clearSignupForm();
+      } else {
+        alert('Signup failed');
+      }
+    });
+
+    function displaySuccessModal(message) {
+      const modal = document.getElementById('successModal');
+      const successMessage = document.getElementById('successMessage');
+      successMessage.textContent = message;
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('successModal');
+      modal.style.display = 'none';
+    }
+
+    function clearSignupForm() {
+      document.getElementById('signupForm').reset();
+    }
+
+    
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slide');
+    let slideIndex = 0;
+
+    function slideTo(index) {
+      slideIndex = index;
+      slider.style.transform = `translateX(-${slideIndex * 100}%)`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent default form submission
+  
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+  
+        const loginData = {
+          email,
+          password
+        };
+  
+        try {
+          const response = await fetch('/users/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+          });
+  
+          if (response.ok) {
+           
+          window.location.href = 'dashboard2.html'; 
+            //window.location.href = 'dashboard2.html'; 
+          } else {
+            // Handle login failure
+            alert('Login failed');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      });
+
+
+
+    });
+  
+
+  </script>
+  
+</body>
+</html>
